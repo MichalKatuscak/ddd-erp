@@ -29,7 +29,7 @@ Moduly lze individuálně zapínat a vypínat bez zásahu do kódu.
 | Messaging | Symfony Messenger (3 busy) |
 | ORM | Doctrine ORM (XML mapping) |
 | API dokumentace | nelmio/api-doc-bundle (OpenAPI) |
-| Frontend | Samostatný SPA repozitář (JSON API) |
+| Frontend | React SPA ve stejném repozitáři (`/frontend/`), komunikace přes JSON API |
 | Testy | PHPUnit, reálná PostgreSQL v Docker |
 
 ---
@@ -84,6 +84,9 @@ ddd-erp/
 │   │       └── QualityControl/
 │   ├── notifications/
 │   └── reporting/
+├── frontend/                         # React SPA
+│   ├── package.json
+│   └── src/
 ├── composer.json
 └── docker-compose.yml
 ```

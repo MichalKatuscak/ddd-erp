@@ -33,8 +33,8 @@ export function CustomersPage() {
   })
 
   const columns: Column<CustomerListItem>[] = [
-    { key: 'full_name', header: 'Jméno' },
-    { key: 'email', header: 'E-mail' },
+    { key: 'full_name', header: 'Jméno', render: (row) => row.full_name },
+    { key: 'email', header: 'E-mail', render: (row) => row.email },
   ]
 
   return (
@@ -46,7 +46,7 @@ export function CustomersPage() {
         </div>
         <Table
           columns={columns}
-          data={data}
+          data={data as (CustomerListItem & Record<string, unknown>)[]}
           loading={isLoading}
           rowKey={(row) => row.id}
           onRowClick={async (row) => {

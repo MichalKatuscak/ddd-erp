@@ -5,6 +5,12 @@ doctrine:
         types:
             customer_id:    Crm\Contacts\Infrastructure\Doctrine\Type\CustomerIdType
             customer_email: Crm\Contacts\Infrastructure\Doctrine\Type\CustomerEmailType
+            user_id:        Identity\User\Infrastructure\Doctrine\Type\UserIdType
+            user_email:     Identity\User\Infrastructure\Doctrine\Type\UserEmailType
+            user_password:  Identity\User\Infrastructure\Doctrine\Type\UserPasswordType
+            role_id:        Identity\Role\Infrastructure\Doctrine\Type\RoleIdType
+            role_name:      Identity\Role\Infrastructure\Doctrine\Type\RoleNameType
+            refresh_token_id: Identity\Auth\Infrastructure\Doctrine\Type\RefreshTokenIdType
 
     orm:
         auto_generate_proxy_classes: true
@@ -15,4 +21,19 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/packages/crm/src/Contacts/Infrastructure/Doctrine'
                 prefix: 'Crm\Contacts\Domain'
+                is_bundle: false
+            IdentityUser:
+                type: xml
+                dir: '%kernel.project_dir%/packages/identity/src/User/Infrastructure/Doctrine'
+                prefix: 'Identity\User\Domain'
+                is_bundle: false
+            IdentityRole:
+                type: xml
+                dir: '%kernel.project_dir%/packages/identity/src/Role/Infrastructure/Doctrine'
+                prefix: 'Identity\Role\Domain'
+                is_bundle: false
+            IdentityAuth:
+                type: xml
+                dir: '%kernel.project_dir%/packages/identity/src/Auth/Infrastructure/Doctrine'
+                prefix: 'Identity\Auth\Domain'
                 is_bundle: false

@@ -46,3 +46,27 @@ services:
     # Shared Kernel Infrastructure — DomainExceptionListener atd.
     SharedKernel\Infrastructure\:
         resource: '../packages/shared-kernel/src/Infrastructure/'
+
+    # Identity package — autoconfigure handlery a services
+    Identity\:
+        resource: '../packages/identity/src/'
+        exclude:
+            - '../packages/identity/src/*/Domain/'
+            - '../packages/identity/src/*/Infrastructure/Doctrine/Type/'
+
+    Identity\User\Domain\UserRepository:
+        alias: Identity\User\Infrastructure\Persistence\DoctrineUserRepository
+
+    Identity\Role\Domain\RoleRepository:
+        alias: Identity\Role\Infrastructure\Persistence\DoctrineRoleRepository
+
+    Identity\Auth\Domain\RefreshTokenRepository:
+        alias: Identity\Auth\Infrastructure\Persistence\DoctrineRefreshTokenRepository
+
+    Identity\Auth\Application\JwtTokenService:
+        alias: Identity\Auth\Infrastructure\Jwt\FirebaseJwtTokenService
+
+    Identity\Auth\Infrastructure\Jwt\FirebaseJwtTokenService:
+        arguments:
+            $secret: '%env(JWT_SECRET)%'
+            $ttl: '%env(int:JWT_TTL)%'

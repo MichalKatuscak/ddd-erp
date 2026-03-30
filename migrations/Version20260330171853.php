@@ -14,13 +14,13 @@ final class Version20260330171853 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Create crm_customers table for CRM Contacts aggregate';
     }
 
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE crm_customers (email VARCHAR(255) NOT NULL, registered_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR NOT NULL, first_name VARCHAR(100) NOT NULL, last_name VARCHAR(100) NOT NULL, PRIMARY KEY (id))');
+        $this->addSql('CREATE TABLE crm_customers (email VARCHAR(255) NOT NULL, registered_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR(36) NOT NULL, first_name VARCHAR(100) NOT NULL, last_name VARCHAR(100) NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_2339B30CE7927C74 ON crm_customers (email)');
     }
 

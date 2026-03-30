@@ -28,8 +28,23 @@ const indexRoute = createRoute({
   path: '/',
   beforeLoad: () => {
     requireAuth()
-    throw redirect({ to: '/crm/customers' })
+    const store = useAuthStore.getState()
+    if (store.hasPermission('crm.contacts.view_customers')) {
+      throw redirect({ to: '/crm/customers' })
+    }
+    if (store.hasPermission('identity.users.manage')) {
+      throw redirect({ to: '/identity/users' })
+    }
+    if (store.hasPermission('identity.roles.manage')) {
+      throw redirect({ to: '/identity/roles' })
+    }
+    // No known route accessible — stay on '/' and render a fallback
   },
+  component: () => (
+    <div style={{ padding: 32, color: 'var(--color-neutral-600)' }}>
+      Nemáte přístup k žádné sekci. Kontaktujte správce.
+    </div>
+  ),
 })
 
 const crmCustomersRoute = createRoute({

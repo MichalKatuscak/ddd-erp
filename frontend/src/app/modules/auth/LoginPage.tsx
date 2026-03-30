@@ -23,7 +23,7 @@ export function LoginPage() {
         { id: me.id, email: me.email, firstName: me.first_name, lastName: me.last_name },
         me.permissions,
       )
-      navigate({ to: '/' })
+      await navigate({ to: '/' })
     },
   })
 

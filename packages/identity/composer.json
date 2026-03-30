@@ -24,7 +24,8 @@
             "Identity\\Tests\\": "tests/"
         },
         "classmap": [
-            "tests/Role/Application/TestDoubles.php"
+            "tests/Role/Application/TestDoubles.php",
+            "tests/User/Application/TestDoubles.php"
         ]
     },
     "minimum-stability": "dev",

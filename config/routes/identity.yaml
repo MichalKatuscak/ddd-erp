@@ -1,0 +1,17 @@
+identity_auth:
+    resource:
+        path: '../../packages/identity/src/Auth/Infrastructure/Http/'
+        namespace: 'Identity\Auth\Infrastructure\Http'
+    type: attribute
+
+identity_users:
+    resource:
+        path: '../../packages/identity/src/User/Infrastructure/Http/'
+        namespace: 'Identity\User\Infrastructure\Http'
+    type: attribute
+
+identity_roles:
+    resource:
+        path: '../../packages/identity/src/Role/Infrastructure/Http/'
+        namespace: 'Identity\Role\Infrastructure\Http'
+    type: attribute

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Identity\Role\Domain\Role" table="identity_roles">
+
+        <id name="id" type="role_id" column="id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <field name="name" type="role_name" column="name" length="100" nullable="false" unique="true"/>
+
+        <field name="permissions" type="json" column="permissions" nullable="false"/>
+
+    </entity>
+
+</doctrine-mapping>

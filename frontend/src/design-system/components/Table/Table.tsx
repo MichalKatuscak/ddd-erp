@@ -1,9 +1,10 @@
+import type { ReactNode } from 'react'
 import styles from './Table.module.css'
 
 export interface Column<T> {
   key: string
   header: string
-  render?: (row: T) => React.ReactNode
+  render?: (row: T) => ReactNode
 }
 
 interface TableProps<T> {
@@ -11,6 +12,7 @@ interface TableProps<T> {
   data: T[]
   loading?: boolean
   onRowClick?: (row: T) => void
+  rowKey: (row: T) => string | number
 }
 
 const SKELETON_ROWS = 5
@@ -20,6 +22,7 @@ export function Table<T extends Record<string, unknown>>({
   data,
   loading = false,
   onRowClick,
+  rowKey,
 }: TableProps<T>) {
   return (
     <div className={styles.wrapper}>
@@ -42,11 +45,18 @@ export function Table<T extends Record<string, unknown>>({
                   ))}
                 </tr>
               ))
-            : data.map((row, i) => (
+            : data.map((row) => (
                 <tr
-                  key={i}
+                  key={rowKey(row)}
                   className={[styles.row, onRowClick ? styles.clickable : ''].join(' ')}
                   onClick={() => onRowClick?.(row)}
+                  tabIndex={onRowClick ? 0 : undefined}
+                  onKeyDown={onRowClick ? (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      onRowClick(row)
+                    }
+                  } : undefined}
                 >
                   {columns.map(col => (
                     <td key={col.key} className={styles.td}>

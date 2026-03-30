@@ -1,8 +1,9 @@
+import type { ReactNode } from 'react'
 import styles from './PageLayout.module.css'
 
 interface PageLayoutProps {
-  sidebar: React.ReactNode
-  children: React.ReactNode
+  sidebar: ReactNode
+  children: ReactNode
 }
 
 export function PageLayout({ sidebar, children }: PageLayoutProps) {

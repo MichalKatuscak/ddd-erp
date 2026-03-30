@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import type { ReactNode } from 'react'
+import { useEffect, useRef, useId } from 'react'
 import { createPortal } from 'react-dom'
 import styles from './Modal.module.css'
 
@@ -6,11 +7,18 @@ interface ModalProps {
   open: boolean
   onClose: () => void
   title: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export function Modal({ open, onClose, title, children }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
+  const onCloseRef = useRef(onClose)
+  const titleId = useId()
+
+  // Keep onCloseRef current without adding onClose to effect deps
+  useEffect(() => {
+    onCloseRef.current = onClose
+  })
 
   useEffect(() => {
     if (!open) return
@@ -18,16 +26,17 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
     const el = dialogRef.current
     if (!el) return
 
-    const focusable = el.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    )
-    const first = focusable[0]
-    const last = focusable[focusable.length - 1]
+    const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { onClose(); return }
+      if (e.key === 'Escape') { onCloseRef.current(); return }
       if (e.key !== 'Tab') return
+
+      const focusable = el.querySelectorAll<HTMLElement>(FOCUSABLE)
       if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
       if (e.shiftKey) {
         if (document.activeElement === first) { e.preventDefault(); last?.focus() }
       } else {
@@ -36,25 +45,29 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
     }
 
     document.addEventListener('keydown', handleKey)
-    first?.focus()
+
+    // Focus first focusable element on open
+    const focusable = el.querySelectorAll<HTMLElement>(FOCUSABLE)
+    focusable[0]?.focus()
+
     return () => document.removeEventListener('keydown', handleKey)
-  }, [open, onClose])
+  }, [open])
 
   if (!open) return null
 
   return createPortal(
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={styles.overlay} onClick={() => onCloseRef.current()}>
       <div
         ref={dialogRef}
         className={styles.dialog}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        aria-labelledby={titleId}
         onClick={e => e.stopPropagation()}
       >
         <div className={styles.header}>
-          <h2 id="modal-title" className={styles.title}>{title}</h2>
-          <button className={styles.close} onClick={onClose} aria-label="Zavřít">✕</button>
+          <h2 id={titleId} className={styles.title}>{title}</h2>
+          <button className={styles.close} onClick={() => onCloseRef.current()} aria-label="Zavřít">✕</button>
         </div>
         <div className={styles.body}>{children}</div>
       </div>

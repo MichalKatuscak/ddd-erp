@@ -16,7 +16,7 @@ const data = [
   { name: 'Eva Svobodová', email: 'eva@firma.cz', city: 'Brno' },
 ]
 
-export const Default: Story = { args: { columns, data } }
-export const Loading: Story = { args: { columns, data: [], loading: true } }
-export const Empty: Story = { args: { columns, data: [] } }
-export const Clickable: Story = { args: { columns, data, onRowClick: (row) => alert(JSON.stringify(row)) } }
+export const Default: Story = { args: { columns, data, rowKey: (row) => row.email as string } }
+export const Loading: Story = { args: { columns, data: [], loading: true, rowKey: (row) => row.email as string } }
+export const Empty: Story = { args: { columns, data: [], rowKey: (row) => row.email as string } }
+export const Clickable: Story = { args: { columns, data, rowKey: (row) => row.email as string, onRowClick: (row) => alert(JSON.stringify(row)) } }

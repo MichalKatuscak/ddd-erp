@@ -69,7 +69,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         {user && (
           <div className={styles.userInfo}>
             <div className={styles.avatar}>
-              {user.firstName[0]}{user.lastName[0]}
+              {user.firstName?.[0] ?? ''}{user.lastName?.[0] ?? ''}
             </div>
             <span className={styles.userEmail}>{user.email}</span>
           </div>

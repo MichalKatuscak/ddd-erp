@@ -22,7 +22,10 @@
     "autoload-dev": {
         "psr-4": {
             "Identity\\Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "tests/Role/Application/TestDoubles.php"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

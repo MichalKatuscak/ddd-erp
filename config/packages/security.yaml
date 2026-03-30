@@ -3,24 +3,26 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     providers:
-        users_in_memory:
-            memory:
-                users:
-                    admin:
-                        password: '$2y$13$NpgydjP3FvcGkc4i8RRAw.LIIiYmJ3a6CP3ueMTreXaaXYiPS4mLW'
-                        roles:
-                            - ROLE_CRM_CONTACTS_VIEW_CUSTOMERS
-                            - ROLE_CRM_CONTACTS_CREATE_CUSTOMER
-                            - ROLE_CRM_CONTACTS_UPDATE_CUSTOMER
+        identity:
+            id: Identity\Auth\Infrastructure\Security\IdentityUserProvider
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        login:
+            pattern: ^/api/identity/commands/login$
+            security: false
+        refresh:
+            pattern: ^/api/identity/commands/refresh-token$
+            security: false
         api:
             pattern: ^/api
             stateless: true
-            http_basic: ~
+            custom_authenticators:
+                - Identity\Auth\Infrastructure\Security\JwtAuthenticator
 
     access_control:
+        - { path: ^/api/identity/commands/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/identity/commands/refresh-token, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

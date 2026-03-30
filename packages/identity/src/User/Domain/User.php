@@ -40,6 +40,9 @@ final class User extends AggregateRoot
 
     public function deactivate(): void
     {
+        if (!$this->active) {
+            return;
+        }
         $this->active = false;
         $this->recordEvent(new UserDeactivated($this->id));
     }

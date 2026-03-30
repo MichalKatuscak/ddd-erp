@@ -115,6 +115,19 @@ final class UserTest extends TestCase
         $this->assertTrue($roleIds[0]->equals($newRoleId));
     }
 
+    public function test_deactivate_is_idempotent(): void
+    {
+        $user = $this->createUser();
+        $user->deactivate();
+        $user->pullDomainEvents(); // clear
+
+        $user->deactivate(); // second call — no-op
+
+        $this->assertFalse($user->isActive());
+        $events = $user->pullDomainEvents();
+        $this->assertCount(0, $events);
+    }
+
     public function test_password_verification(): void
     {
         $user = $this->createUser();

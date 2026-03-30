@@ -33,6 +33,12 @@ final class UserPasswordTest extends TestCase
         UserPassword::fromPlaintext('short');
     }
 
+    public function test_throws_on_empty_hash(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        UserPassword::fromHash('');
+    }
+
     public function test_creates_from_existing_hash(): void
     {
         $original = UserPassword::fromPlaintext('SecurePass123!');

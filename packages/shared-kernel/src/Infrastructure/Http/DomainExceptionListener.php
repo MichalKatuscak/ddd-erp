@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 
 final class DomainExceptionListener
 {
@@ -19,6 +20,14 @@ final class DomainExceptionListener
         // Let Symfony HTTP exceptions pass through
         if ($exception instanceof HttpExceptionInterface) {
             return;
+        }
+
+        // Unwrap Messenger HandlerFailedException to get the original domain exception
+        if ($exception instanceof HandlerFailedException) {
+            $nested = $exception->getWrappedExceptions();
+            if (!empty($nested)) {
+                $exception = reset($nested);
+            }
         }
 
         if ($exception instanceof \DomainException) {

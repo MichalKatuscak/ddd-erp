@@ -7,7 +7,7 @@ security:
             memory:
                 users:
                     admin:
-                        password: '$2y$13$fakeHashForDevOnly.replaceInProduction'
+                        password: '$2y$13$NpgydjP3FvcGkc4i8RRAw.LIIiYmJ3a6CP3ueMTreXaaXYiPS4mLW'
                         roles:
                             - ROLE_CRM_CONTACTS_VIEW_CUSTOMERS
                             - ROLE_CRM_CONTACTS_CREATE_CUSTOMER

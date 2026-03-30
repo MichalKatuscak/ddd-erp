@@ -7,6 +7,9 @@ use SharedKernel\Application\EventBusInterface;
 use SharedKernel\Domain\DomainEvent;
 use Symfony\Component\Messenger\MessageBusInterface;
 
+/**
+ * Adapts Symfony Messenger to EventBusInterface for async domain event publishing.
+ */
 final class MessengerEventBus implements EventBusInterface
 {
     public function __construct(

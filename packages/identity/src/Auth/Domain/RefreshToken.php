@@ -19,6 +19,9 @@ final class RefreshToken
 
     public function revoke(): void
     {
+        if ($this->revokedAt !== null) {
+            return;
+        }
         $this->revokedAt = new \DateTimeImmutable();
     }
 

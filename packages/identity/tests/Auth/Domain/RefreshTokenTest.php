@@ -40,6 +40,23 @@ final class RefreshTokenTest extends TestCase
         $this->assertFalse($token->isValid());
     }
 
+    public function test_revoke_is_idempotent(): void
+    {
+        $token = new RefreshToken(
+            RefreshTokenId::generate(),
+            UserId::generate(),
+            hash('sha256', 'random-token'),
+            new \DateTimeImmutable('+30 days'),
+        );
+
+        $token->revoke();
+        $firstRevokedAt = $token->revokedAt();
+
+        $token->revoke(); // second call — no-op
+
+        $this->assertSame($firstRevokedAt, $token->revokedAt());
+    }
+
     public function test_expired_token_is_invalid(): void
     {
         $token = new RefreshToken(

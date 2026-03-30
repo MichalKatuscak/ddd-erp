@@ -6,10 +6,16 @@
         <testsuite name="Integration">
             <directory>packages/crm/tests/Contacts/Infrastructure</directory>
         </testsuite>
+        <testsuite name="E2E">
+            <directory>tests/Identity/E2e</directory>
+        </testsuite>
     </testsuites>
     <php>
         <env name="APP_ENV" value="test"/>
         <env name="DATABASE_URL" value="postgresql://erp:erp_secret@db:5432/ddd_erp_test"/>
         <env name="KERNEL_CLASS" value="App\Kernel"/>
+        <env name="JWT_SECRET" value="test_jwt_secret_at_least_32_characters_long"/>
+        <env name="JWT_TTL" value="900"/>
+        <env name="APP_SECRET" value="test_app_secret_32chars_minimum_x"/>
     </php>
 </phpunit>

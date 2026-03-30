@@ -11,11 +11,21 @@ final class RegisterCustomerControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
+        // Login to get JWT token
+        $client->request('POST', '/api/identity/commands/login', [], [], [
+            'CONTENT_TYPE' => 'application/json',
+        ], json_encode([
+            'email'    => 'admin@erp.local',
+            'password' => 'changeme',
+        ]));
+        $loginData = json_decode($client->getResponse()->getContent(), true);
+        $token = $loginData['access_token'];
+
         $client->request(
             method: 'POST',
             uri: '/api/crm/contacts/commands/register-customer',
             server: [
-                'HTTP_AUTHORIZATION' => 'Basic ' . base64_encode('admin:password'),
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
                 'CONTENT_TYPE'       => 'application/json',
             ],
             content: json_encode([
@@ -35,11 +45,21 @@ final class RegisterCustomerControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
+        // Login to get JWT token
+        $client->request('POST', '/api/identity/commands/login', [], [], [
+            'CONTENT_TYPE' => 'application/json',
+        ], json_encode([
+            'email'    => 'admin@erp.local',
+            'password' => 'changeme',
+        ]));
+        $loginData = json_decode($client->getResponse()->getContent(), true);
+        $token = $loginData['access_token'];
+
         $client->request(
             method: 'POST',
             uri: '/api/crm/contacts/commands/register-customer',
             server: [
-                'HTTP_AUTHORIZATION' => 'Basic ' . base64_encode('admin:password'),
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
                 'CONTENT_TYPE'       => 'application/json',
             ],
             content: json_encode([

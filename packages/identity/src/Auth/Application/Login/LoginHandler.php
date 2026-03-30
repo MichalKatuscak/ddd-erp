@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Identity\Auth\Application\Login;
 
 use Identity\Auth\Application\JwtTokenService;
+use Identity\Auth\Domain\InvalidCredentialsException;
 use Identity\Auth\Domain\RefreshToken;
 use Identity\Auth\Domain\RefreshTokenId;
 use Identity\Auth\Domain\RefreshTokenRepository;
@@ -27,11 +28,11 @@ final class LoginHandler
         $user = $this->userRepository->findByEmail(UserEmail::fromString($query->email));
 
         if ($user === null || !$user->password()->verify($query->password)) {
-            throw new \DomainException('Invalid credentials');
+            throw new InvalidCredentialsException('Invalid credentials');
         }
 
         if (!$user->isActive()) {
-            throw new \DomainException('User account is deactivated');
+            throw new InvalidCredentialsException('User account is deactivated');
         }
 
         $permissions = [];

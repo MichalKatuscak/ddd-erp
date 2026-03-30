@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Identity\Auth\Domain;
 
-final class InvalidTokenException extends \DomainException
+use SharedKernel\Domain\UncaughtDomainException;
+
+final class InvalidTokenException extends \DomainException implements UncaughtDomainException
 {
     public function __construct(string $message = 'Invalid or expired token')
     {

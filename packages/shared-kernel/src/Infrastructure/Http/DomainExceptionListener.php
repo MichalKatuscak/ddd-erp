@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace SharedKernel\Infrastructure\Http;
 
+use SharedKernel\Domain\UncaughtDomainException;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,11 @@ final class DomainExceptionListener
             if (!empty($nested)) {
                 $exception = reset($nested);
             }
+        }
+
+        // Exceptions marked as UncaughtDomainException should propagate as 500
+        if ($exception instanceof UncaughtDomainException) {
+            return;
         }
 
         if ($exception instanceof \DomainException) {

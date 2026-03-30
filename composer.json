@@ -8,6 +8,8 @@
         "ext-pdo_pgsql": "*",
         "ddd-erp/shared-kernel": "*",
         "ddd-erp/crm": "*",
+        "ddd-erp/identity": "*",
+        "firebase/php-jwt": "^6.0",
         "symfony/framework-bundle": "^7.2",
         "symfony/dotenv": "^7.2",
         "symfony/runtime": "^7.2",
@@ -26,7 +28,8 @@
     },
     "repositories": [
         {"type": "path", "url": "./packages/shared-kernel", "options": {"symlink": true}},
-        {"type": "path", "url": "./packages/crm", "options": {"symlink": true}}
+        {"type": "path", "url": "./packages/crm", "options": {"symlink": true}},
+        {"type": "path", "url": "./packages/identity", "options": {"symlink": true}}
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,

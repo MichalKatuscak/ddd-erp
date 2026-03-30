@@ -1,0 +1,106 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.logo {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-6);
+  padding: 0 var(--space-2);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-700);
+  text-decoration: none;
+  transition: background-color 0.1s;
+}
+
+.link:hover {
+  background: var(--color-neutral-100);
+}
+
+.linkActive {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  font-weight: var(--font-weight-medium);
+}
+
+.linkActive:hover {
+  background: var(--color-primary-100);
+}
+
+.userSection {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-neutral-200);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userEmail {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-600);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-500);
+  padding: var(--space-1) 0;
+  text-align: left;
+  transition: color 0.1s;
+}
+
+.logoutBtn:hover {
+  color: var(--color-neutral-900);
+}

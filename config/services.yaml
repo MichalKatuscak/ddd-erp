@@ -40,9 +40,8 @@ services:
             - '../packages/crm/src/*/Domain/'
             - '../packages/crm/src/*/Infrastructure/Doctrine/Type/'
 
-    # CustomerRepository binding — konkrétní implementace bude v Task 13
     Crm\Contacts\Domain\CustomerRepository:
-        synthetic: true
+        alias: Crm\Contacts\Infrastructure\Persistence\DoctrineCustomerRepository
 
     # Shared Kernel Infrastructure — DomainExceptionListener atd.
     SharedKernel\Infrastructure\:

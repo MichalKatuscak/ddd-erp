@@ -4,6 +4,11 @@
 **Status:** Schváleno
 **MVP:** CRM (Contacts BC)
 
+> **DŮLEŽITÉ:** Veškerá implementace se striktně řídí pravidly a doporučeními příručky
+> [DDD v Symfony](https://ddd-v-symfony.katuscak.cz/). V případě jakéhokoliv architektonického
+> rozhodnutí má příručka přednost. Patří sem zejména: správné použití Aggregate Roots,
+> Value Objects, Domain Events, CQRS přes Messenger, anti-vzory a situace, kdy DDD nepoužívat.
+
 ---
 
 ## 1. Přehled projektu

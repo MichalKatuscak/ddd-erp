@@ -25,7 +25,8 @@
         },
         "classmap": [
             "tests/Role/Application/TestDoubles.php",
-            "tests/User/Application/TestDoubles.php"
+            "tests/User/Application/TestDoubles.php",
+            "tests/Auth/Application/TestDoubles.php"
         ]
     },
     "minimum-stability": "dev",

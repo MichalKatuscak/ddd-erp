@@ -67,7 +67,7 @@ final class JwtTokenServiceTest extends TestCase
         $token = $service->issueAccessToken(UserId::generate(), []);
 
         $this->expectException(InvalidTokenException::class);
-        $this->service->validateAccessToken($token);
+        $service->validateAccessToken($token);
     }
 
     public function test_throws_on_wrong_secret(): void

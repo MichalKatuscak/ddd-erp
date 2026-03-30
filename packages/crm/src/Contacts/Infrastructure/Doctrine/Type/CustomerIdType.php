@@ -9,13 +9,6 @@ use Doctrine\DBAL\Types\StringType;
 
 final class CustomerIdType extends StringType
 {
-    public const NAME = 'customer_id';
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?CustomerId
     {
         if ($value === null) {
@@ -32,8 +25,4 @@ final class CustomerIdType extends StringType
         return $value instanceof CustomerId ? $value->value() : (string) $value;
     }
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        return true;
-    }
 }

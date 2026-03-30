@@ -9,13 +9,6 @@ use Doctrine\DBAL\Types\StringType;
 
 final class CustomerEmailType extends StringType
 {
-    public const NAME = 'customer_email';
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?CustomerEmail
     {
         if ($value === null) {
@@ -32,8 +25,4 @@ final class CustomerEmailType extends StringType
         return $value instanceof CustomerEmail ? $value->value() : (string) $value;
     }
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        return true;
-    }
 }

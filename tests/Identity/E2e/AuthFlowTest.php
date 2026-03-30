@@ -37,7 +37,7 @@ final class AuthFlowTest extends WebTestCase
             'password' => 'wrong-password',
         ]));
 
-        $this->assertResponseStatusCodeSame(500); // DomainException handler
+        $this->assertResponseStatusCodeSame(401); // InvalidCredentialsException → 401
     }
 
     public function test_jwt_grants_access_to_crm_endpoint(): void
@@ -119,7 +119,7 @@ final class AuthFlowTest extends WebTestCase
         ]));
 
         // Should fail (expired/revoked token)
-        $this->assertResponseStatusCodeSame(500);
+        $this->assertResponseStatusCodeSame(401);
     }
 
     public function test_logout_revokes_refresh_token(): void
@@ -154,7 +154,7 @@ final class AuthFlowTest extends WebTestCase
             'refresh_token' => $refreshToken,
         ]));
 
-        $this->assertResponseStatusCodeSame(500);
+        $this->assertResponseStatusCodeSame(401);
     }
 
     public function test_get_current_user(): void

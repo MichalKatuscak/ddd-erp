@@ -18,7 +18,7 @@ final class DomainExceptionListener
     {
         $exception = $event->getThrowable();
 
-        // Let Symfony HTTP exceptions pass through
+        // Let Symfony HTTP exceptions pass through (but not wrapped ones — handle below)
         if ($exception instanceof HttpExceptionInterface) {
             return;
         }
@@ -29,6 +29,16 @@ final class DomainExceptionListener
             if (!empty($nested)) {
                 $exception = reset($nested);
             }
+        }
+
+        // Domain exceptions that declare their own HTTP status code (e.g. 401)
+        if ($exception instanceof HttpExceptionInterface) {
+            $event->setResponse(new JsonResponse(
+                ['error' => $exception->getMessage()],
+                $exception->getStatusCode(),
+                $exception->getHeaders(),
+            ));
+            return;
         }
 
         // Exceptions marked as UncaughtDomainException should propagate as 500

@@ -2,6 +2,14 @@
     "name": "ddd-erp/crm",
     "type": "library",
     "description": "CRM doménový package — Contacts, SalesPipeline, Activities Bounded Contexts",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../shared-kernel"
+        }
+    ],
     "require": {
         "php": "^8.4",
         "ddd-erp/shared-kernel": "*",

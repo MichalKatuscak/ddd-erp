@@ -1,0 +1,5 @@
+crm_contacts:
+    resource:
+        path: '../../packages/crm/src/Contacts/Infrastructure/Http/'
+        namespace: 'Crm\Contacts\Infrastructure\Http'
+    type: attribute

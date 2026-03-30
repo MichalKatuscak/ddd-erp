@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="Integration">
+            <directory>packages/crm/tests/Contacts/Infrastructure</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="APP_ENV" value="test"/>
+        <env name="DATABASE_URL" value="postgresql://erp:erp_secret@db:5432/ddd_erp_test"/>
+        <env name="KERNEL_CLASS" value="App\Kernel"/>
+    </php>
+</phpunit>

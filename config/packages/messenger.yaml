@@ -1,0 +1,13 @@
+# config/packages/messenger.yaml
+framework:
+    messenger:
+        default_bus: command.bus
+        buses:
+            command.bus:
+                middleware: []
+            query.bus:
+                middleware: []
+            event.bus:
+                default_middleware:
+                    enabled: true
+                    allow_no_handlers: true

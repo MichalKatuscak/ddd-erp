@@ -1,0 +1,48 @@
+# config/services.yaml
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+
+    # Shared Kernel — Command Bus
+    SharedKernel\Infrastructure\Messenger\MessengerCommandBus:
+        arguments:
+            $commandBus: '@command.bus'
+
+    SharedKernel\Application\CommandBusInterface:
+        alias: SharedKernel\Infrastructure\Messenger\MessengerCommandBus
+
+    # Shared Kernel — Query Bus
+    SharedKernel\Infrastructure\Messenger\MessengerQueryBus:
+        arguments:
+            $queryBus: '@query.bus'
+
+    SharedKernel\Application\QueryBusInterface:
+        alias: SharedKernel\Infrastructure\Messenger\MessengerQueryBus
+
+    # Shared Kernel — Event Bus
+    SharedKernel\Infrastructure\Messenger\MessengerEventBus:
+        arguments:
+            $eventBus: '@event.bus'
+
+    SharedKernel\Application\EventBusInterface:
+        alias: SharedKernel\Infrastructure\Messenger\MessengerEventBus
+
+    # CRM package — autoconfigure handlery a services
+    Crm\:
+        resource: '../packages/crm/src/'
+        exclude:
+            - '../packages/crm/src/*/Domain/'
+            - '../packages/crm/src/*/Infrastructure/Doctrine/Type/'
+
+    Crm\Contacts\Domain\CustomerRepository:
+        alias: Crm\Contacts\Infrastructure\Persistence\DoctrineCustomerRepository
+
+    # Shared Kernel Infrastructure — DomainExceptionListener atd.
+    SharedKernel\Infrastructure\:
+        resource: '../packages/shared-kernel/src/Infrastructure/'

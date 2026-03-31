@@ -1,0 +1,5 @@
+planning:
+    resource:
+        path: '../../packages/planning/src/Infrastructure/Http/'
+        namespace: 'Planning\Infrastructure\Http'
+    type: attribute

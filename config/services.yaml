@@ -79,7 +79,7 @@ services:
             - '../packages/planning/src/*/Infrastructure/Doctrine/Type/'
 
     Planning\Order\Domain\OrderRepository:
-        alias: Planning\Order\Infrastructure\Persistence\DoctrineOrderRepository
+        alias: Planning\Infrastructure\Persistence\DoctrineOrderRepository
 
     Planning\Worker\Domain\WorkerRepository:
-        alias: Planning\Worker\Infrastructure\Persistence\DoctrineWorkerRepository
+        alias: Planning\Infrastructure\Persistence\DoctrineWorkerRepository

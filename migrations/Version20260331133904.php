@@ -73,5 +73,13 @@ final class Version20260331133904 extends AbstractMigration
         $this->addSql('DROP TABLE planning_workers');
         $this->addSql('DROP TABLE planning_phases');
         $this->addSql('DROP TABLE planning_orders');
+
+        $this->addSql("UPDATE identity_roles
+            SET permissions = (
+                SELECT COALESCE(json_agg(p), '[]'::json)
+                FROM json_array_elements_text(permissions::jsonb) AS t(p)
+                WHERE p NOT IN ('planning.orders.manage', 'planning.workers.manage')
+            )
+            WHERE name = 'super-admin'");
     }
 }

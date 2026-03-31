@@ -66,6 +66,9 @@ final class Phase
 
     public function addAssignment(Assignment $assignment): void
     {
+        if (count($this->assignments) >= $this->headcount) {
+            throw new \DomainException("Phase '{$this->name}' already has {$this->headcount} assignment(s) — headcount full");
+        }
         $this->assignments[] = $assignment;
     }
 

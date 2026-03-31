@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Planning\Order\Application\AssignWorker;
 
+use Doctrine\DBAL\Connection;
 use Planning\Order\Domain\OrderId;
 use Planning\Order\Domain\OrderRepository;
 use Planning\Order\Domain\PhaseId;
@@ -18,6 +19,7 @@ final class AssignWorkerHandler
     public function __construct(
         private readonly OrderRepository  $orderRepository,
         private readonly WorkerRepository $workerRepository,
+        private readonly Connection       $connection,
     ) {}
 
     public function __invoke(AssignWorkerCommand $command): void
@@ -53,7 +55,14 @@ final class AssignWorkerHandler
         // Record assignment on order
         $order->assignWorker($phase->id(), $command->workerId, $command->allocationPercent);
 
-        $this->workerRepository->save($worker);
-        $this->orderRepository->save($order);
+        $this->connection->beginTransaction();
+        try {
+            $this->workerRepository->save($worker);
+            $this->orderRepository->save($order);
+            $this->connection->commit();
+        } catch (\Throwable $e) {
+            $this->connection->rollBack();
+            throw $e;
+        }
     }
 }

@@ -19,6 +19,7 @@ use Planning\Order\Domain\PhaseId;
 use Planning\Worker\Application\RegisterWorker\RegisterWorkerCommand;
 use Planning\Worker\Application\RegisterWorker\RegisterWorkerHandler;
 use Planning\Tests\Worker\Application\InMemoryWorkerRepository;
+use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 
 final class AssignWorkerHandlerTest extends TestCase
@@ -49,7 +50,11 @@ final class AssignWorkerHandlerTest extends TestCase
             new RegisterWorkerCommand($workerId, 'designer', [])
         );
 
-        (new AssignWorkerHandler($this->orderRepo, $this->workerRepo))(
+        $connection = $this->createMock(Connection::class);
+        $connection->method('beginTransaction');
+        $connection->method('commit');
+
+        (new AssignWorkerHandler($this->orderRepo, $this->workerRepo, $connection))(
             new AssignWorkerCommand($orderId, $phaseId, $workerId, 50)
         );
 

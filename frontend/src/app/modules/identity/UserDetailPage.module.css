@@ -1,0 +1,117 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-500);
+}
+
+.breadcrumbLink {
+  color: var(--color-primary-600);
+  text-decoration: none;
+}
+
+.breadcrumbLink:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbSep {
+  color: var(--color-neutral-300);
+}
+
+.breadcrumbCurrent {
+  color: var(--color-neutral-700);
+}
+
+.loading {
+  color: var(--color-neutral-500);
+  font-size: var(--font-size-sm);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-900);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 480px;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rolesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.roleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-700);
+}
+
+.roleRow input[type="checkbox"] {
+  width: var(--space-4);
+  height: var(--space-4);
+  accent-color: var(--color-primary-600);
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.dangerZone {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--color-danger-200);
+  border-radius: var(--radius-md);
+  background: var(--color-danger-50);
+  max-width: 480px;
+}
+
+.dangerTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-danger-700);
+}
+
+.dangerText {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-600);
+}

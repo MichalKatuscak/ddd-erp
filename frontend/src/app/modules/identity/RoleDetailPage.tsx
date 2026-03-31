@@ -22,7 +22,7 @@ export function RoleDetailPage() {
 
   const [permissions, setPermissions] = useState<string[]>([])
 
-  const { data: role, isLoading } = useQuery({
+  const { data: role, isLoading, isError } = useQuery({
     queryKey: ['role', roleId],
     queryFn: () => identityApi.getRole(roleId),
   })
@@ -41,6 +41,17 @@ export function RoleDetailPage() {
     },
   })
 
+  const handleBack = () => {
+    const original = role?.permissions ?? []
+    const isDirty =
+      permissions.length !== original.length ||
+      permissions.some((p) => !original.includes(p))
+    if (isDirty && !window.confirm('Máte neuložené změny. Opravdu chcete odejít?')) {
+      return
+    }
+    void navigate({ to: '/identity/roles' })
+  }
+
   const togglePermission = (p: string) => {
     setPermissions((prev) =>
       prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]
@@ -58,6 +69,8 @@ export function RoleDetailPage() {
 
         {isLoading ? (
           <p className={styles.loading}>Načítám…</p>
+        ) : isError ? (
+          <p className={styles.loading}>Nepodařilo se načíst roli.</p>
         ) : (
           <form
             className={styles.form}
@@ -82,10 +95,15 @@ export function RoleDetailPage() {
             </div>
 
             <div className={styles.actions}>
+              {updateMutation.isError && (
+                <p style={{ color: 'var(--color-danger-600)', fontSize: 'var(--font-size-sm)' }}>
+                  Nepodařilo se uložit oprávnění
+                </p>
+              )}
               <Button
                 variant="secondary"
                 type="button"
-                onClick={async () => { await navigate({ to: '/identity/roles' }) }}
+                onClick={handleBack}
               >
                 Zpět
               </Button>

@@ -87,3 +87,6 @@ services:
     # Audit package — event handlers
     Audit\:
         resource: '../packages/audit/src/'
+        exclude:
+            - '../packages/audit/src/*/Domain/'
+            - '../packages/audit/src/*/Infrastructure/Doctrine/Type/'

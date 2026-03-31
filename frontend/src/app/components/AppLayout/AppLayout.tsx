@@ -41,6 +41,30 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
       )}
 
+      {(hasPermission('planning.orders.manage') || hasPermission('planning.workers.manage')) && (
+        <div className={styles.section}>
+          <p className={styles.sectionLabel}>Plánování</p>
+          {hasPermission('planning.orders.manage') && (
+            <Link
+              to="/planning/orders"
+              activeProps={{ className: `${styles.link} ${styles.linkActive}` }}
+              inactiveProps={{ className: styles.link }}
+            >
+              Zakázky
+            </Link>
+          )}
+          {hasPermission('planning.workers.manage') && (
+            <Link
+              to="/planning/workers"
+              activeProps={{ className: `${styles.link} ${styles.linkActive}` }}
+              inactiveProps={{ className: styles.link }}
+            >
+              Pracovníci
+            </Link>
+          )}
+        </div>
+      )}
+
       {(hasPermission('identity.users.manage') || hasPermission('identity.roles.manage')) && (
         <div className={styles.section}>
           <p className={styles.sectionLabel}>Administrace</p>

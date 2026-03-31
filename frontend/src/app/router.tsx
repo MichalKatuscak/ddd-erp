@@ -7,6 +7,10 @@ import { RolesPage } from './modules/identity/RolesPage'
 import { RoleDetailPage } from './modules/identity/RoleDetailPage'
 import { UsersPage } from './modules/identity/UsersPage'
 import { UserDetailPage } from './modules/identity/UserDetailPage'
+import { OrdersPage } from './modules/planning/OrdersPage'
+import { OrderDetailPage } from './modules/planning/OrderDetailPage'
+import { WorkersPage } from './modules/planning/WorkersPage'
+import { WorkerDetailPage } from './modules/planning/WorkerDetailPage'
 
 function requireAuth() {
   if (!useAuthStore.getState().isAuthenticated()) {
@@ -94,6 +98,34 @@ const identityRoleDetailRoute = createRoute({
   component: RoleDetailPage,
 })
 
+const planningOrdersRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/planning/orders',
+  beforeLoad: () => requirePermission('planning.orders.manage'),
+  component: OrdersPage,
+})
+
+const planningOrderDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/planning/orders/$orderId',
+  beforeLoad: () => requirePermission('planning.orders.manage'),
+  component: OrderDetailPage,
+})
+
+const planningWorkersRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/planning/workers',
+  beforeLoad: () => requirePermission('planning.workers.manage'),
+  component: WorkersPage,
+})
+
+const planningWorkerDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/planning/workers/$workerId',
+  beforeLoad: () => requirePermission('planning.workers.manage'),
+  component: WorkerDetailPage,
+})
+
 const routeTree = rootRoute.addChildren([
   loginRoute,
   indexRoute,
@@ -103,6 +135,10 @@ const routeTree = rootRoute.addChildren([
   identityUserDetailRoute,
   identityRolesRoute,
   identityRoleDetailRoute,
+  planningOrdersRoute,
+  planningOrderDetailRoute,
+  planningWorkersRoute,
+  planningWorkerDetailRoute,
 ])
 
 export const router = createRouter({ routeTree })

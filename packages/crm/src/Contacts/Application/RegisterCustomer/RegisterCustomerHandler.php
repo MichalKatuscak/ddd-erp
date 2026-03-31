@@ -21,9 +21,14 @@ final class RegisterCustomerHandler
 
     public function __invoke(RegisterCustomerCommand $command): void
     {
+        $email = CustomerEmail::fromString($command->email);
+        if ($this->repository->findByEmail($email) !== null) {
+            throw new \DomainException("Customer with email '{$command->email}' is already registered");
+        }
+
         $customer = Customer::register(
             CustomerId::fromString($command->customerId),
-            CustomerEmail::fromString($command->email),
+            $email,
             CustomerName::fromParts($command->firstName, $command->lastName),
         );
 

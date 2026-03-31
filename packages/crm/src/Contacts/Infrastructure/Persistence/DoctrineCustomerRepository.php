@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Crm\Contacts\Infrastructure\Persistence;
 
 use Crm\Contacts\Domain\Customer;
+use Crm\Contacts\Domain\CustomerEmail;
 use Crm\Contacts\Domain\CustomerId;
 use Crm\Contacts\Domain\CustomerNotFoundException;
 use Crm\Contacts\Domain\CustomerRepository;
@@ -22,6 +23,13 @@ final class DoctrineCustomerRepository implements CustomerRepository
             throw new CustomerNotFoundException($id->value());
         }
         return $customer;
+    }
+
+    public function findByEmail(CustomerEmail $email): ?Customer
+    {
+        return $this->entityManager
+            ->getRepository(Customer::class)
+            ->findOneBy(['email' => $email]);
     }
 
     public function save(Customer $customer): void

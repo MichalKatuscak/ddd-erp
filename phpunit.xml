@@ -12,7 +12,7 @@
     </testsuites>
     <php>
         <env name="APP_ENV" value="test"/>
-        <env name="DATABASE_URL" value="postgresql://erp:erp_secret@db:5432/ddd_erp_test"/>
+        <env name="DATABASE_URL" value="postgresql://erp:erp_secret@127.0.0.1:5432/ddd_erp_test"/>
         <env name="KERNEL_CLASS" value="App\Kernel"/>
         <env name="JWT_SECRET" value="test_jwt_secret_at_least_32_characters_long"/>
         <env name="JWT_TTL" value="900"/>

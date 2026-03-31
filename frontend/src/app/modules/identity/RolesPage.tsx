@@ -23,10 +23,15 @@ export function RolesPage() {
     mutationFn: () => identityApi.createRole(name, []),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['roles'] })
-      setOpen(false)
-      setName('')
+      handleClose()
     },
   })
+
+  const handleClose = () => {
+    setOpen(false)
+    setName('')
+    createMutation.reset()
+  }
 
   const columns: Column<RoleListItem>[] = [
     { key: 'name', header: 'Název', render: (row) => row.name },
@@ -53,7 +58,7 @@ export function RolesPage() {
             await navigate({ to: '/identity/roles/$roleId', params: { roleId: row.id } })
           }}
         />
-        <Modal open={open} onClose={() => setOpen(false)} title="Vytvořit roli">
+        <Modal open={open} onClose={handleClose} title="Vytvořit roli">
           <form
             className={styles.form}
             onSubmit={(e) => { e.preventDefault(); createMutation.mutate() }}
@@ -75,11 +80,11 @@ export function RolesPage() {
               <Button
                 variant="secondary"
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
               >
                 Zrušit
               </Button>
-              <Button type="submit" loading={createMutation.isPending}>
+              <Button type="submit" loading={createMutation.isPending} disabled={!name.trim()}>
                 Vytvořit
               </Button>
             </div>

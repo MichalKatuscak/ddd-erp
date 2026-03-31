@@ -36,6 +36,11 @@ final class Worker extends AggregateRoot
         return new self($id, $primaryRole, $skills, $allocations);
     }
 
+    public function updatePrimaryRole(WorkerRole $role): void
+    {
+        $this->primaryRole = $role;
+    }
+
     /** @param string[] $skills */
     public function updateSkills(array $skills): void
     {

@@ -45,4 +45,24 @@ final class UpdateUserControllerTest extends WebTestCase
         $data = json_decode($client->getResponse()->getContent(), true);
         $this->assertSame('/errors/validation', $data['type']);
     }
+
+    public function test_returns_404_for_non_existent_user(): void
+    {
+        $client = static::createClient();
+
+        $client->request('POST', '/api/identity/commands/login', [], [], [
+            'CONTENT_TYPE' => 'application/json',
+        ], json_encode(['email' => 'admin@erp.local', 'password' => 'changeme']));
+        $token = json_decode($client->getResponse()->getContent(), true)['access_token'];
+
+        $client->request('PUT', '/api/identity/users/commands/update-user/00000000-0000-7000-8000-000000000001', [], [], [
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'CONTENT_TYPE'       => 'application/json',
+        ], json_encode(['email' => 'new@test.cz', 'first_name' => 'Jan', 'last_name' => 'Test']));
+
+        $this->assertResponseStatusCodeSame(404);
+        $data = json_decode($client->getResponse()->getContent(), true);
+        $this->assertSame('/errors/not-found', $data['type']);
+        $this->assertSame(404, $data['status']);
+    }
 }

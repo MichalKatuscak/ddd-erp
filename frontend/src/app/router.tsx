@@ -5,6 +5,7 @@ import { CustomersPage } from './modules/crm/CustomersPage'
 import { CustomerDetailPage } from './modules/crm/CustomerDetailPage'
 import { RolesPage } from './modules/identity/RolesPage'
 import { RoleDetailPage } from './modules/identity/RoleDetailPage'
+import { UsersPage } from './modules/identity/UsersPage'
 
 function requireAuth() {
   if (!useAuthStore.getState().isAuthenticated()) {
@@ -68,7 +69,7 @@ const identityUsersRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/identity/users',
   beforeLoad: () => requirePermission('identity.users.manage'),
-  component: () => <div style={{ padding: 32 }}>Uživatelé — připravuje se</div>,
+  component: UsersPage,
 })
 
 const identityUserDetailRoute = createRoute({

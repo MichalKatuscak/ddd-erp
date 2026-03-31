@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Table, Button, Badge, Modal, FormField, Input } from '../../../design-system'
@@ -17,12 +17,12 @@ export function UsersPage() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
 
-  const { data: users = [], isLoading } = useQuery({
+  const { data: users = [], isLoading: usersLoading } = useQuery({
     queryKey: ['users'],
     queryFn: () => identityApi.getUsers(),
   })
 
-  const { data: roles = [] } = useQuery({
+  const { data: roles = [], isLoading: rolesLoading } = useQuery({
     queryKey: ['roles'],
     queryFn: () => identityApi.getRoles(),
   })
@@ -44,7 +44,7 @@ export function UsersPage() {
     registerMutation.reset()
   }
 
-  const columns: Column<UserListItem>[] = [
+  const columns = useMemo<Column<UserListItem>[]>(() => [
     { key: 'name', header: 'Jméno', render: (row) => row.name },
     { key: 'email', header: 'E-mail', render: (row) => row.email },
     {
@@ -69,7 +69,7 @@ export function UsersPage() {
         />
       ),
     },
-  ]
+  ], [roles])
 
   return (
     <AppLayout>
@@ -81,7 +81,7 @@ export function UsersPage() {
         <Table
           columns={columns}
           data={users as (UserListItem & Record<string, unknown>)[]}
-          loading={isLoading}
+          loading={usersLoading || rolesLoading}
           rowKey={(row) => row.id}
           onRowClick={async (row) => {
             await navigate({ to: '/identity/users/$userId', params: { userId: row.id } })
@@ -92,6 +92,11 @@ export function UsersPage() {
             className={styles.form}
             onSubmit={(e) => { e.preventDefault(); registerMutation.mutate() }}
           >
+            {registerMutation.isError && (
+              <p style={{ color: 'var(--color-danger-600)', fontSize: 'var(--font-size-sm)' }}>
+                Nepodařilo se vytvořit uživatele
+              </p>
+            )}
             <FormField label="Jméno" htmlFor="regFirstName">
               <Input
                 id="regFirstName"
@@ -117,17 +122,12 @@ export function UsersPage() {
                 placeholder="jan@firma.cz"
               />
             </FormField>
-            <FormField
-              label="Heslo"
-              htmlFor="regPassword"
-              error={registerMutation.isError ? 'Nepodařilo se vytvořit uživatele' : undefined}
-            >
+            <FormField label="Heslo" htmlFor="regPassword">
               <Input
                 id="regPassword"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={registerMutation.isError}
               />
             </FormField>
             <div className={styles.actions}>

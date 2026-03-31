@@ -3,6 +3,7 @@ import { useAuthStore } from './auth/authStore'
 import { LoginPage } from './modules/auth/LoginPage'
 import { CustomersPage } from './modules/crm/CustomersPage'
 import { CustomerDetailPage } from './modules/crm/CustomerDetailPage'
+import { RolesPage } from './modules/identity/RolesPage'
 
 function requireAuth() {
   if (!useAuthStore.getState().isAuthenticated()) {
@@ -69,11 +70,25 @@ const identityUsersRoute = createRoute({
   component: () => <div style={{ padding: 32 }}>Uživatelé — připravuje se</div>,
 })
 
+const identityUserDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/identity/users/$userId',
+  beforeLoad: () => requirePermission('identity.users.manage'),
+  component: () => <div style={{ padding: 32 }}>Detail uživatele — připravuje se</div>,
+})
+
 const identityRolesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/identity/roles',
   beforeLoad: () => requirePermission('identity.roles.manage'),
-  component: () => <div style={{ padding: 32 }}>Role — připravuje se</div>,
+  component: RolesPage,
+})
+
+const identityRoleDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/identity/roles/$roleId',
+  beforeLoad: () => requirePermission('identity.roles.manage'),
+  component: () => <div style={{ padding: 32 }}>Detail role — připravuje se</div>,
 })
 
 const routeTree = rootRoute.addChildren([
@@ -82,7 +97,9 @@ const routeTree = rootRoute.addChildren([
   crmCustomersRoute,
   crmCustomerDetailRoute,
   identityUsersRoute,
+  identityUserDetailRoute,
   identityRolesRoute,
+  identityRoleDetailRoute,
 ])
 
 export const router = createRouter({ routeTree })

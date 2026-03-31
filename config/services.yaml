@@ -76,9 +76,10 @@ services:
         resource: '../packages/planning/src/'
         exclude:
             - '../packages/planning/src/*/Domain/'
+            - '../packages/planning/src/*/Infrastructure/Doctrine/Type/'
 
     Planning\Order\Domain\OrderRepository:
-        alias: Planning\Infrastructure\Persistence\DoctrineOrderRepository
+        alias: Planning\Order\Infrastructure\Persistence\DoctrineOrderRepository
 
     Planning\Worker\Domain\WorkerRepository:
-        alias: Planning\Infrastructure\Persistence\DoctrineWorkerRepository
+        alias: Planning\Worker\Infrastructure\Persistence\DoctrineWorkerRepository

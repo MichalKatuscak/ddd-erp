@@ -1,6 +1,7 @@
 {
     "name": "ddd-erp/planning",
     "type": "library",
+    "description": "Planning bounded context — orders, phases, worker allocations",
     "require": {
         "php": "^8.4",
         "ddd-erp/shared-kernel": "*",
@@ -20,11 +21,7 @@
     "autoload-dev": {
         "psr-4": {
             "Planning\\Tests\\": "tests/"
-        },
-        "classmap": [
-            "tests/Order/Application/TestDoubles.php",
-            "tests/Worker/Application/TestDoubles.php"
-        ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

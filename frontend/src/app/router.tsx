@@ -4,6 +4,7 @@ import { LoginPage } from './modules/auth/LoginPage'
 import { CustomersPage } from './modules/crm/CustomersPage'
 import { CustomerDetailPage } from './modules/crm/CustomerDetailPage'
 import { RolesPage } from './modules/identity/RolesPage'
+import { RoleDetailPage } from './modules/identity/RoleDetailPage'
 
 function requireAuth() {
   if (!useAuthStore.getState().isAuthenticated()) {
@@ -88,7 +89,7 @@ const identityRoleDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/identity/roles/$roleId',
   beforeLoad: () => requirePermission('identity.roles.manage'),
-  component: () => <div style={{ padding: 32 }}>Detail role — připravuje se</div>,
+  component: RoleDetailPage,
 })
 
 const routeTree = rootRoute.addChildren([

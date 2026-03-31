@@ -60,8 +60,7 @@ InquiryStatus:  new → in_progress → quoted → won / lost / cancelled
 QuoteStatus:    draft → sent → accepted / rejected
 ```
 
-Kdy `Inquiry` přejde do `won`: zákazník přijme nabídku (`Quote → accepted`).
-Systém emituje `QuoteAccepted` domain event → Planning BC poslouchá a vytvoří `Order`.
+Kdy `Inquiry` přejde do `won`: `AcceptQuote` handler nastaví Quote na `accepted`, emituje `QuoteAccepted` domain event, a zároveň odešle `AdvanceInquiryStatus` command → Inquiry přejde do `won`. Planning BC poslouchá `QuoteAccepted` a vytvoří `Order`.
 
 ---
 

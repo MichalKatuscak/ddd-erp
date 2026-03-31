@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from '@tanstack/react-router'
+import { useParams, useNavigate } from '@tanstack/react-router'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Button } from '../../../design-system'
 import { identityApi } from '../../api/identity'
@@ -62,7 +62,7 @@ export function RoleDetailPage() {
     <AppLayout>
       <div className={styles.page}>
         <nav className={styles.breadcrumb}>
-          <Link to="/identity/roles" className={styles.breadcrumbLink}>Role</Link>
+          <button type="button" className={styles.breadcrumbLink} onClick={handleBack}>Role</button>
           <span className={styles.breadcrumbSep}>›</span>
           <span className={styles.breadcrumbCurrent}>{role?.name ?? '…'}</span>
         </nav>

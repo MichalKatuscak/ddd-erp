@@ -4,11 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9808aec9e0b31cd512e6dbc4f3b99b8",
+    "content-hash": "853883de6529d6c7c69a6638556f2cf7",
     "packages": [
         {
+            "name": "ddd-erp/audit",
+            "version": "dev-feature/audit-log",
+            "dist": {
+                "type": "path",
+                "url": "./packages/audit",
+                "reference": "ec79bbc3c45ceae995c9d4d667c8ac6aceeb5e99"
+            },
+            "require": {
+                "ddd-erp/crm": "*",
+                "ddd-erp/identity": "*",
+                "ddd-erp/shared-kernel": "*",
+                "doctrine/dbal": "^4.0",
+                "doctrine/orm": "^3.0",
+                "php": "^8.4",
+                "symfony/messenger": "^7.2",
+                "symfony/security-bundle": "^7.2",
+                "symfony/uid": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.0",
+                "symfony/browser-kit": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Audit\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Audit\\Tests\\": "tests/"
+                }
+            },
+            "description": "Audit log — cross-cutting event listener bounded context",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "ddd-erp/crm",
-            "version": "dev-main",
+            "version": "dev-feature/audit-log",
             "dist": {
                 "type": "path",
                 "url": "./packages/crm",
@@ -46,7 +86,7 @@
         },
         {
             "name": "ddd-erp/identity",
-            "version": "dev-main",
+            "version": "dev-feature/audit-log",
             "dist": {
                 "type": "path",
                 "url": "./packages/identity",
@@ -88,7 +128,7 @@
         },
         {
             "name": "ddd-erp/planning",
-            "version": "dev-main",
+            "version": "dev-feature/audit-log",
             "dist": {
                 "type": "path",
                 "url": "./packages/planning",
@@ -124,7 +164,7 @@
         },
         {
             "name": "ddd-erp/shared-kernel",
-            "version": "dev-main",
+            "version": "dev-feature/audit-log",
             "dist": {
                 "type": "path",
                 "url": "./packages/shared-kernel",

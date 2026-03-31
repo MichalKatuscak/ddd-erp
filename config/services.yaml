@@ -83,3 +83,7 @@ services:
 
     Planning\Worker\Domain\WorkerRepository:
         alias: Planning\Infrastructure\Persistence\DoctrineWorkerRepository
+
+    # Audit package — event handlers
+    Audit\:
+        resource: '../packages/audit/src/'

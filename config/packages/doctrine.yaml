@@ -37,3 +37,8 @@ doctrine:
                 dir: '%kernel.project_dir%/packages/identity/src/Auth/Infrastructure/Doctrine'
                 prefix: 'Identity\Auth\Domain'
                 is_bundle: false
+            Audit:
+                type: attribute
+                dir: '%kernel.project_dir%/packages/audit/src/Infrastructure'
+                prefix: 'Audit\Infrastructure'
+                is_bundle: false

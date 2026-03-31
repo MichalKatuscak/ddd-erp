@@ -8,6 +8,7 @@
         "ext-pdo_pgsql": "*",
         "ddd-erp/crm": "*",
         "ddd-erp/identity": "*",
+        "ddd-erp/audit": "*",
         "ddd-erp/planning": "*",
         "ddd-erp/shared-kernel": "*",
         "doctrine/doctrine-bundle": "^2.12",
@@ -33,7 +34,8 @@
         {"type": "path", "url": "./packages/shared-kernel", "options": {"symlink": true}},
         {"type": "path", "url": "./packages/crm", "options": {"symlink": true}},
         {"type": "path", "url": "./packages/identity", "options": {"symlink": true}},
-        {"type": "path", "url": "./packages/planning", "options": {"symlink": true}}
+        {"type": "path", "url": "./packages/planning", "options": {"symlink": true}},
+        {"type": "path", "url": "./packages/audit", "options": {"symlink": true}}
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,

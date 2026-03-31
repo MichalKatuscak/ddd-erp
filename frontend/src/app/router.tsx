@@ -1,6 +1,8 @@
 import { createRouter, createRoute, createRootRoute, Outlet, redirect } from '@tanstack/react-router'
 import { useAuthStore } from './auth/authStore'
 import { LoginPage } from './modules/auth/LoginPage'
+import { CustomersPage } from './modules/crm/CustomersPage'
+import { CustomerDetailPage } from './modules/crm/CustomerDetailPage'
 
 function requireAuth() {
   if (!useAuthStore.getState().isAuthenticated()) {
@@ -38,7 +40,6 @@ const indexRoute = createRoute({
     if (store.hasPermission('identity.roles.manage')) {
       throw redirect({ to: '/identity/roles' })
     }
-    // No known route accessible — stay on '/' and render a fallback
   },
   component: () => (
     <div style={{ padding: 32, color: 'var(--color-neutral-600)' }}>
@@ -51,7 +52,14 @@ const crmCustomersRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/crm/customers',
   beforeLoad: () => requirePermission('crm.contacts.view_customers'),
-  component: () => <div style={{ padding: 32 }}>CRM Zákazníci — připravuje se</div>,
+  component: CustomersPage,
+})
+
+const crmCustomerDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/crm/customers/$customerId',
+  beforeLoad: () => requirePermission('crm.contacts.view_customers'),
+  component: CustomerDetailPage,
 })
 
 const identityUsersRoute = createRoute({
@@ -72,6 +80,7 @@ const routeTree = rootRoute.addChildren([
   loginRoute,
   indexRoute,
   crmCustomersRoute,
+  crmCustomerDetailRoute,
   identityUsersRoute,
   identityRolesRoute,
 ])

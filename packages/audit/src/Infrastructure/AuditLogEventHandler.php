@@ -111,6 +111,8 @@ final class AuditLogEventHandler
             occurredAt: $occurredAt,
         );
         $this->entityManager->persist($entry);
+        // Flush immediately so audit entries persist independently of the main transaction.
+        // This is intentional: audit records survive even if the command handler's operation rolls back.
         $this->entityManager->flush();
     }
 }

@@ -70,3 +70,15 @@ services:
         arguments:
             $secret: '%env(JWT_SECRET)%'
             $ttl: '%env(int:JWT_TTL)%'
+
+    # Planning package
+    Planning\:
+        resource: '../packages/planning/src/'
+        exclude:
+            - '../packages/planning/src/*/Domain/'
+
+    Planning\Order\Domain\OrderRepository:
+        alias: Planning\Infrastructure\Persistence\DoctrineOrderRepository
+
+    Planning\Worker\Domain\WorkerRepository:
+        alias: Planning\Infrastructure\Persistence\DoctrineWorkerRepository

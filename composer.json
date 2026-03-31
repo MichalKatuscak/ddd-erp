@@ -6,20 +6,21 @@
         "php": "^8.4",
         "ext-pdo": "*",
         "ext-pdo_pgsql": "*",
-        "ddd-erp/shared-kernel": "*",
         "ddd-erp/crm": "*",
         "ddd-erp/identity": "*",
-        "firebase/php-jwt": "^6.0",
-        "symfony/framework-bundle": "^7.2",
-        "symfony/dotenv": "^7.2",
-        "symfony/runtime": "^7.2",
-        "symfony/messenger": "^7.2",
-        "symfony/security-bundle": "^7.2",
-        "symfony/uid": "^7.2",
-        "doctrine/orm": "^3.0",
+        "ddd-erp/planning": "*",
+        "ddd-erp/shared-kernel": "*",
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
-        "nelmio/api-doc-bundle": "^4.27"
+        "doctrine/orm": "^3.0",
+        "firebase/php-jwt": "^6.0",
+        "nelmio/api-doc-bundle": "^4.27",
+        "symfony/dotenv": "^7.2",
+        "symfony/framework-bundle": "^7.2",
+        "symfony/messenger": "^7.2",
+        "symfony/runtime": "^7.2",
+        "symfony/security-bundle": "^7.2",
+        "symfony/uid": "^7.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
@@ -29,7 +30,8 @@
     "repositories": [
         {"type": "path", "url": "./packages/shared-kernel", "options": {"symlink": true}},
         {"type": "path", "url": "./packages/crm", "options": {"symlink": true}},
-        {"type": "path", "url": "./packages/identity", "options": {"symlink": true}}
+        {"type": "path", "url": "./packages/identity", "options": {"symlink": true}},
+        {"type": "path", "url": "./packages/planning", "options": {"symlink": true}}
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,

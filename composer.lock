@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5616bfdd75e90f388fe97477a4d0b8fc",
+    "content-hash": "628f729286a0c031db6c7a4fb864fad4",
     "packages": [
         {
             "name": "ddd-erp/crm",
-            "version": "dev-main",
+            "version": "dev-feature/planning",
             "dist": {
                 "type": "path",
                 "url": "./packages/crm",
@@ -46,11 +46,11 @@
         },
         {
             "name": "ddd-erp/identity",
-            "version": "dev-main",
+            "version": "dev-feature/planning",
             "dist": {
                 "type": "path",
                 "url": "./packages/identity",
-                "reference": "ac309cad024485254dccd2628c6aa5c2fd1e1ab0"
+                "reference": "6b8d1596a997d56f0ae4ceb2b5157912e80fbc29"
             },
             "require": {
                 "ddd-erp/shared-kernel": "*",
@@ -73,7 +73,12 @@
             "autoload-dev": {
                 "psr-4": {
                     "Identity\\Tests\\": "tests/"
-                }
+                },
+                "classmap": [
+                    "tests/Role/Application/TestDoubles.php",
+                    "tests/User/Application/TestDoubles.php",
+                    "tests/Auth/Application/TestDoubles.php"
+                ]
             },
             "description": "Identity & Access Bounded Context — Users, Roles, JWT Auth",
             "transport-options": {
@@ -82,8 +87,47 @@
             }
         },
         {
+            "name": "ddd-erp/planning",
+            "version": "dev-feature/planning",
+            "dist": {
+                "type": "path",
+                "url": "./packages/planning",
+                "reference": "faadd5050a39e109a0a0559ecd0b37e4599a09c4"
+            },
+            "require": {
+                "ddd-erp/shared-kernel": "*",
+                "doctrine/doctrine-bundle": "^2.0",
+                "doctrine/orm": "^3.0",
+                "php": "^8.4",
+                "symfony/security-bundle": "^7.0",
+                "symfony/uid": "^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Planning\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Planning\\Tests\\": "tests/"
+                },
+                "classmap": [
+                    "tests/Order/Application/TestDoubles.php",
+                    "tests/Worker/Application/TestDoubles.php"
+                ]
+            },
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "ddd-erp/shared-kernel",
-            "version": "dev-main",
+            "version": "dev-feature/planning",
             "dist": {
                 "type": "path",
                 "url": "./packages/shared-kernel",

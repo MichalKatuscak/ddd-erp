@@ -5,11 +5,12 @@ namespace Identity\Role\Infrastructure\Http;
 
 use Identity\Auth\Infrastructure\Security\IdentityPermission;
 use Identity\Role\Application\UpdateRolePermissions\UpdateRolePermissionsCommand;
+use Identity\Role\Infrastructure\Http\Request\UpdateRolePermissionsRequest;
 use SharedKernel\Application\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -21,13 +22,11 @@ final class UpdateRolePermissionsController extends AbstractController
         private readonly CommandBusInterface $commandBus,
     ) {}
 
-    public function __invoke(Request $request, string $id): JsonResponse
+    public function __invoke(#[MapRequestPayload] UpdateRolePermissionsRequest $request, string $id): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-
         $this->commandBus->dispatch(new UpdateRolePermissionsCommand(
             roleId: $id,
-            permissions: (array) ($data['permissions'] ?? []),
+            permissions: $request->permissions ?? [],
         ));
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);

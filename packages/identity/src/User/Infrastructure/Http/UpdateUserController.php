@@ -5,11 +5,12 @@ namespace Identity\User\Infrastructure\Http;
 
 use Identity\Auth\Infrastructure\Security\IdentityPermission;
 use Identity\User\Application\UpdateUser\UpdateUserCommand;
+use Identity\User\Infrastructure\Http\Request\UpdateUserRequest;
 use SharedKernel\Application\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -21,15 +22,13 @@ final class UpdateUserController extends AbstractController
         private readonly CommandBusInterface $commandBus,
     ) {}
 
-    public function __invoke(Request $request, string $id): JsonResponse
+    public function __invoke(#[MapRequestPayload] UpdateUserRequest $request, string $id): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-
         $this->commandBus->dispatch(new UpdateUserCommand(
             userId: $id,
-            email: (string) ($data['email'] ?? ''),
-            firstName: (string) ($data['first_name'] ?? ''),
-            lastName: (string) ($data['last_name'] ?? ''),
+            email: $request->email,
+            firstName: $request->first_name,
+            lastName: $request->last_name,
         ));
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);

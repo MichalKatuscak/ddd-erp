@@ -71,7 +71,8 @@ final class RegisterCustomerControllerTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(422);
         $data = json_decode($client->getResponse()->getContent(), true);
-        $this->assertArrayHasKey('error', $data);
+        $this->assertSame('/errors/validation', $data['type']);
+        $this->assertArrayHasKey('violations', $data);
     }
 
     public function test_returns_401_without_auth(): void

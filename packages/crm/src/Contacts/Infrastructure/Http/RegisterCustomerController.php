@@ -5,12 +5,13 @@ namespace Crm\Contacts\Infrastructure\Http;
 
 use Crm\Contacts\Application\RegisterCustomer\RegisterCustomerCommand;
 use Crm\Contacts\Domain\CustomerId;
+use Crm\Contacts\Infrastructure\Http\Request\RegisterCustomerRequest;
 use Crm\Contacts\Infrastructure\Security\ContactsPermission;
 use SharedKernel\Application\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -22,17 +23,15 @@ final class RegisterCustomerController extends AbstractController
         private readonly CommandBusInterface $commandBus,
     ) {}
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(#[MapRequestPayload] RegisterCustomerRequest $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-
         $customerId = CustomerId::generate()->value();
 
         $this->commandBus->dispatch(new RegisterCustomerCommand(
             customerId: $customerId,
-            email: (string) ($data['email'] ?? ''),
-            firstName: (string) ($data['first_name'] ?? ''),
-            lastName: (string) ($data['last_name'] ?? ''),
+            email: $request->email,
+            firstName: $request->first_name,
+            lastName: $request->last_name,
         ));
 
         return new JsonResponse(['id' => $customerId], Response::HTTP_CREATED);

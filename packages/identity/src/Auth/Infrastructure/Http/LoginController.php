@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace Identity\Auth\Infrastructure\Http;
 
 use Identity\Auth\Application\Login\LoginQuery;
+use Identity\Auth\Infrastructure\Http\Request\LoginRequest;
 use SharedKernel\Application\QueryBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/identity/commands/login', methods: ['POST'])]
@@ -17,14 +18,12 @@ final class LoginController extends AbstractController
         private readonly QueryBusInterface $queryBus,
     ) {}
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(#[MapRequestPayload] LoginRequest $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-
         /** @var \Identity\Auth\Application\Login\LoginResultDTO $result */
         $result = $this->queryBus->dispatch(new LoginQuery(
-            email: (string) ($data['email'] ?? ''),
-            password: (string) ($data['password'] ?? ''),
+            email: $request->email,
+            password: $request->password,
         ));
 
         return new JsonResponse([

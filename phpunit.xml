@@ -5,6 +5,9 @@
     <testsuites>
         <testsuite name="Integration">
             <directory>packages/crm/tests/Contacts/Infrastructure</directory>
+            <directory>packages/identity/tests/Auth/Infrastructure</directory>
+            <directory>packages/identity/tests/User/Infrastructure</directory>
+            <directory>packages/identity/tests/Role/Infrastructure</directory>
         </testsuite>
         <testsuite name="E2E">
             <directory>tests/Identity/E2e</directory>

@@ -9,16 +9,38 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 final class DomainExceptionListener
 {
-    #[AsEventListener]
+    #[AsEventListener(event: KernelEvents::EXCEPTION)]
     public function onException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
 
-        // Let Symfony HTTP exceptions pass through (but not wrapped ones — handle below)
+        // Handle MapRequestPayload validation failures → RFC 7807 with violations
+        if ($exception instanceof UnprocessableEntityHttpException) {
+            $previous = $exception->getPrevious();
+            if ($previous instanceof ValidationFailedException) {
+                $violations = [];
+                foreach ($previous->getViolations() as $violation) {
+                    $property = $violation->getPropertyPath();
+                    $violations[$property][] = $violation->getMessage();
+                }
+                $event->setResponse(new JsonResponse([
+                    'type'       => '/errors/validation',
+                    'title'      => 'Validation Failed',
+                    'status'     => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'violations' => $violations,
+                ], Response::HTTP_UNPROCESSABLE_ENTITY));
+                return;
+            }
+        }
+
+        // Let non-validation HTTP exceptions pass through
         if ($exception instanceof HttpExceptionInterface) {
             return;
         }
@@ -33,11 +55,12 @@ final class DomainExceptionListener
 
         // Domain exceptions that declare their own HTTP status code (e.g. 401)
         if ($exception instanceof HttpExceptionInterface) {
-            $event->setResponse(new JsonResponse(
-                ['error' => $exception->getMessage()],
-                $exception->getStatusCode(),
-                $exception->getHeaders(),
-            ));
+            $event->setResponse(new JsonResponse([
+                'type'   => '/errors/domain',
+                'title'  => 'Request Failed',
+                'status' => $exception->getStatusCode(),
+                'detail' => $exception->getMessage(),
+            ], $exception->getStatusCode(), $exception->getHeaders()));
             return;
         }
 
@@ -49,15 +72,20 @@ final class DomainExceptionListener
         if ($exception instanceof \DomainException) {
             $message = $exception->getMessage();
 
-            // CustomerNotFoundException → 404
-            $status = str_contains($message, 'not found')
+            $isNotFound = str_contains(strtolower($message), 'not found');
+            $status = $isNotFound
                 ? Response::HTTP_NOT_FOUND
                 : Response::HTTP_UNPROCESSABLE_ENTITY;
 
-            $event->setResponse(new JsonResponse(
-                ['error' => $message],
-                $status,
-            ));
+            $type = $isNotFound ? '/errors/not-found' : '/errors/domain';
+            $title = $isNotFound ? 'Resource Not Found' : 'Business Rule Violation';
+
+            $event->setResponse(new JsonResponse([
+                'type'   => $type,
+                'title'  => $title,
+                'status' => $status,
+                'detail' => $message,
+            ], $status));
         }
     }
 }

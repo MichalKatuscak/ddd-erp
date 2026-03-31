@@ -19,9 +19,8 @@ export interface CurrentUser {
 export interface UserListItem {
   id: string
   email: string
-  first_name: string
-  last_name: string
-  roles: string[]
+  name: string
+  role_ids: string[]
   active: boolean
 }
 
@@ -30,8 +29,9 @@ export interface UserDetail {
   email: string
   first_name: string
   last_name: string
-  roles: string[]
+  role_ids: string[]
   active: boolean
+  created_at: string
 }
 
 // Roles

@@ -112,11 +112,12 @@ export function OrdersPage() {
               />
             </FormField>
             <FormField label="Plánované zahájení" htmlFor="orderStartDate">
-              <Input
+              <input
                 id="orderStartDate"
                 type="date"
                 value={plannedStartDate}
                 onChange={(e) => setPlannedStartDate(e.target.value)}
+                style={{ width: '100%', padding: 'var(--spacing-2)', border: '1px solid var(--color-neutral-300)', borderRadius: 4, fontSize: 'var(--font-size-sm)' }}
               />
             </FormField>
             <div className={styles.actions}>

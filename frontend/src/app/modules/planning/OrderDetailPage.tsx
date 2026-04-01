@@ -253,21 +253,23 @@ export function OrderDetailPage() {
               />
             </FormField>
             <FormField label="Počet pracovníků" htmlFor="phaseHeadcount">
-              <Input
+              <input
                 id="phaseHeadcount"
                 type="number"
                 min="1"
                 value={headcount}
                 onChange={(e) => setHeadcount(e.target.value)}
+                style={{ width: '100%', padding: 'var(--spacing-2)', border: '1px solid var(--color-neutral-300)', borderRadius: 4, fontSize: 'var(--font-size-sm)' }}
               />
             </FormField>
             <FormField label="Délka (dní)" htmlFor="phaseDuration">
-              <Input
+              <input
                 id="phaseDuration"
                 type="number"
                 min="1"
                 value={durationDays}
                 onChange={(e) => setDurationDays(e.target.value)}
+                style={{ width: '100%', padding: 'var(--spacing-2)', border: '1px solid var(--color-neutral-300)', borderRadius: 4, fontSize: 'var(--font-size-sm)' }}
               />
             </FormField>
             {order.phases.length > 0 && (

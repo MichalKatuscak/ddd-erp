@@ -90,10 +90,9 @@ services:
         exclude:
             - '../packages/sales/src/*/Domain/'
             - '../packages/sales/src/*/Infrastructure/Doctrine/Type/'
-            - '../packages/sales/src/*/Application/'
 
-    #Sales\Inquiry\Domain\InquiryRepository:
-    #    alias: Sales\Inquiry\Infrastructure\Persistence\DoctrineInquiryRepository
+    Sales\Inquiry\Domain\InquiryRepository:
+        alias: Sales\Inquiry\Infrastructure\Persistence\DoctrineInquiryRepository
 
     #Sales\Quote\Domain\QuoteRepository:
     #    alias: Sales\Quote\Infrastructure\Persistence\DoctrineQuoteRepository

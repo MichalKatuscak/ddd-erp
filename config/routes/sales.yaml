@@ -10,3 +10,8 @@ sales_quote:
         namespace: 'Sales\Quote\Infrastructure\Http'
     type: attribute
 
+sales_shared:
+    resource:
+        path: '../../packages/sales/src/Infrastructure/Http/'
+        namespace: 'Sales\Infrastructure\Http'
+    type: attribute

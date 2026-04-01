@@ -28,6 +28,19 @@ export function AppLayout({ children }: AppLayoutProps) {
     <nav className={styles.nav}>
       <div className={styles.logo}>ERP</div>
 
+      {hasPermission('sales.inquiries.manage') && (
+        <div className={styles.section}>
+          <p className={styles.sectionLabel}>Obchod</p>
+          <Link
+            to="/sales/inquiries"
+            activeProps={{ className: `${styles.link} ${styles.linkActive}` }}
+            inactiveProps={{ className: styles.link }}
+          >
+            Poptávky
+          </Link>
+        </div>
+      )}
+
       {hasPermission('crm.contacts.view_customers') && (
         <div className={styles.section}>
           <p className={styles.sectionLabel}>CRM</p>

@@ -11,6 +11,9 @@ import { OrdersPage } from './modules/planning/OrdersPage'
 import { OrderDetailPage } from './modules/planning/OrderDetailPage'
 import { WorkersPage } from './modules/planning/WorkersPage'
 import { WorkerDetailPage } from './modules/planning/WorkerDetailPage'
+import { InquiriesPage } from './modules/sales/InquiriesPage'
+import { InquiryDetailPage } from './modules/sales/InquiryDetailPage'
+import { QuoteDetailPage } from './modules/sales/QuoteDetailPage'
 
 function requireAuth() {
   if (!useAuthStore.getState().isAuthenticated()) {
@@ -126,6 +129,27 @@ const planningWorkerDetailRoute = createRoute({
   component: WorkerDetailPage,
 })
 
+const salesInquiriesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/sales/inquiries',
+  beforeLoad: () => requirePermission('sales.inquiries.manage'),
+  component: InquiriesPage,
+})
+
+const salesInquiryDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/sales/inquiries/$inquiryId',
+  beforeLoad: () => requirePermission('sales.inquiries.manage'),
+  component: InquiryDetailPage,
+})
+
+const salesQuoteDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/sales/inquiries/$inquiryId/quotes/$quoteId',
+  beforeLoad: () => requirePermission('sales.inquiries.manage'),
+  component: QuoteDetailPage,
+})
+
 const routeTree = rootRoute.addChildren([
   loginRoute,
   indexRoute,
@@ -139,6 +163,9 @@ const routeTree = rootRoute.addChildren([
   planningOrderDetailRoute,
   planningWorkersRoute,
   planningWorkerDetailRoute,
+  salesInquiriesRoute,
+  salesInquiryDetailRoute,
+  salesQuoteDetailRoute,
 ])
 
 export const router = createRouter({ routeTree })

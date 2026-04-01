@@ -1,0 +1,12 @@
+sales_inquiry:
+    resource:
+        path: '../../packages/sales/src/Inquiry/Infrastructure/Http/'
+        namespace: 'Sales\Inquiry\Infrastructure\Http'
+    type: attribute
+
+sales_quote:
+    resource:
+        path: '../../packages/sales/src/Quote/Infrastructure/Http/'
+        namespace: 'Sales\Quote\Infrastructure\Http'
+    type: attribute
+

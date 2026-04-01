@@ -1,6 +1,6 @@
 import { useAuthStore } from '../auth/authStore'
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+const BASE_URL = import.meta.env.VITE_API_URL ?? ''
 
 async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const store = useAuthStore.getState()

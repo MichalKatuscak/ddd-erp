@@ -8,7 +8,7 @@
     "packages": [
         {
             "name": "ddd-erp/audit",
-            "version": "dev-main",
+            "version": "dev-feature/sales",
             "dist": {
                 "type": "path",
                 "url": "./packages/audit",
@@ -48,7 +48,7 @@
         },
         {
             "name": "ddd-erp/crm",
-            "version": "dev-main",
+            "version": "dev-feature/sales",
             "dist": {
                 "type": "path",
                 "url": "./packages/crm",
@@ -86,7 +86,7 @@
         },
         {
             "name": "ddd-erp/identity",
-            "version": "dev-main",
+            "version": "dev-feature/sales",
             "dist": {
                 "type": "path",
                 "url": "./packages/identity",
@@ -128,13 +128,14 @@
         },
         {
             "name": "ddd-erp/planning",
-            "version": "dev-main",
+            "version": "dev-feature/sales",
             "dist": {
                 "type": "path",
                 "url": "./packages/planning",
-                "reference": "d901df3b782c52dd23dad722a79baee8061f40a7"
+                "reference": "ccff583978f494d1a01ec2b7b8607f3793bacb38"
             },
             "require": {
+                "ddd-erp/sales": "*",
                 "ddd-erp/shared-kernel": "*",
                 "doctrine/doctrine-bundle": "^2.0",
                 "doctrine/orm": "^3.0",
@@ -168,11 +169,12 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/sales",
-                "reference": "18ea57a47c42f8d235e22004ba493f2726c7b87c"
+                "reference": "8fd991a52fe866bd2248cc17356a9802979fb8cf"
             },
             "require": {
                 "ddd-erp/shared-kernel": "*",
                 "doctrine/dbal": "^4.0",
+                "doctrine/orm": "^3.0",
                 "dompdf/dompdf": "^2.0",
                 "php": "^8.4",
                 "symfony/messenger": "^7.2",
@@ -201,7 +203,7 @@
         },
         {
             "name": "ddd-erp/shared-kernel",
-            "version": "dev-main",
+            "version": "dev-feature/sales",
             "dist": {
                 "type": "path",
                 "url": "./packages/shared-kernel",

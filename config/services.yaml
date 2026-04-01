@@ -90,12 +90,13 @@ services:
         exclude:
             - '../packages/sales/src/*/Domain/'
             - '../packages/sales/src/*/Infrastructure/Doctrine/Type/'
+            - '../packages/sales/src/*/Application/'
 
-    Sales\Inquiry\Domain\InquiryRepository:
-        alias: Sales\Inquiry\Infrastructure\Persistence\DoctrineInquiryRepository
+    #Sales\Inquiry\Domain\InquiryRepository:
+    #    alias: Sales\Inquiry\Infrastructure\Persistence\DoctrineInquiryRepository
 
-    Sales\Quote\Domain\QuoteRepository:
-        alias: Sales\Quote\Infrastructure\Persistence\DoctrineQuoteRepository
+    #Sales\Quote\Domain\QuoteRepository:
+    #    alias: Sales\Quote\Infrastructure\Persistence\DoctrineQuoteRepository
 
     Sales\Inquiry\Infrastructure\Storage\FileStorage:
         alias: Sales\Inquiry\Infrastructure\Storage\LocalFileStorage
@@ -104,9 +105,9 @@ services:
         arguments:
             $uploadDir: '%kernel.project_dir%/var/uploads/sales/attachments'
 
-    Sales\Quote\Infrastructure\Pdf\QuotePdfGenerator:
-        arguments:
-            $outputDir: '%kernel.project_dir%/var/uploads/sales/quotes'
+    #Sales\Quote\Infrastructure\Pdf\QuotePdfGenerator:
+    #    arguments:
+    #        $outputDir: '%kernel.project_dir%/var/uploads/sales/quotes'
 
     # Audit package — event handlers
     Audit\:
